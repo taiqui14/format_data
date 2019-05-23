@@ -50,7 +50,7 @@ def calculate(arr):
 	"""
 
 	:param arr:
-	:return: array [start, end, max, min, average]
+	:return: array [max, min, start, end, average]
 	"""
 	max = arr[0]
 	min = arr[0]
@@ -197,23 +197,70 @@ def process_data(data):
 		result.append(temp)
 	return np.array(result)
 
-def save_toexcel():
-	row1 = [1, 2, 3, 4]
-	row2 = [1, 2, 3, 4]
-	row = []
-	row.append(row1)
-	row.append(row2)
-	df = pd.DataFrame(np.array(row))
-	name = "output.csv"
-	df.to_csv(name, index=False)
-
 def save_tocsv(data):
 	row = []
+	col = []
+	# T: nhiệt độ
+	# L: ánh sáng
+	# W: gió
+	# H: độ ẩm
+	# R: mưa
+	# D: hướng gió
+	T = ["T_max", "T_min", "T_start", "T_end", "T_average"]
+	L = ["L_max", "L_min", "L_start", "L_end", "L_average"]
+	W = ["W_max", "W_min", "W_start", "W_end", "W_average"]
+	H = ["H_max", "H_min", "H_start", "H_end", "H_average"]
+	R = ["R_max", "R_min", "R_start", "R_end", "R_average"]
+	D = ["D_max", "D_min", "D_start", "D_end", "D_average"]
+	# col
+	for i in range(0, 24):
+		hour = abs(i - 23)
+		col.append(T[0] + "_" + str(hour))
+		col.append(T[1] + "_" + str(hour))
+		col.append(T[2] + "_" + str(hour))
+		col.append(T[3] + "_" + str(hour))
+		col.append(T[4] + "_" + str(hour))
+	for i in range(0, 24):
+		hour = abs(i - 23)
+		col.append(L[0] + "_" + str(hour))
+		col.append(L[1] + "_" + str(hour))
+		col.append(L[2] + "_" + str(hour))
+		col.append(L[3] + "_" + str(hour))
+		col.append(L[4] + "_" + str(hour))
+	for i in range(0, 24):
+		hour = abs(i - 23)
+		col.append(W[0] + "_" + str(hour))
+		col.append(W[1] + "_" + str(hour))
+		col.append(W[2] + "_" + str(hour))
+		col.append(W[3] + "_" + str(hour))
+		col.append(W[4] + "_" + str(hour))
+	for i in range(0, 24):
+		hour = abs(i - 23)
+		col.append(H[0] + "_" + str(hour))
+		col.append(H[1] + "_" + str(hour))
+		col.append(H[2] + "_" + str(hour))
+		col.append(H[3] + "_" + str(hour))
+		col.append(H[4] + "_" + str(hour))
+	for i in range(0, 24):
+		hour = abs(i - 23)
+		col.append(R[0] + "_" + str(hour))
+		col.append(R[1] + "_" + str(hour))
+		col.append(R[2] + "_" + str(hour))
+		col.append(R[3] + "_" + str(hour))
+		col.append(R[4] + "_" + str(hour))
+	for i in range(0, 24):
+		hour = abs(i - 23)
+		col.append(D[0] + "_" + str(hour))
+		col.append(D[1] + "_" + str(hour))
+		col.append(D[2] + "_" + str(hour))
+		col.append(D[3] + "_" + str(hour))
+		col.append(D[4] + "_" + str(hour))
+	# row
 	for i in data:
 		# ngày
 		temp = []
 		for j in i:
-			# giò
+			# giờ
 			for k in j:
 				temp.append(k[0])
 				temp.append(k[1])
@@ -221,9 +268,9 @@ def save_tocsv(data):
 				temp.append(k[3])
 				temp.append(k[4])
 		row.append(temp)
-	df = pd.DataFrame(np.array(row))
+	df = pd.DataFrame(np.array(row), columns=col)
 	name = "output.csv"
-	df.to_csv(name,header=False, index=False)
+	df.to_csv(name, index=False)
 
 def main():
 	df = pd.read_csv("VEC_LacDuong.csv", header=None)
